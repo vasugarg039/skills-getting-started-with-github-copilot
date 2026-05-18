@@ -1,3 +1,6 @@
+from src.app import activities
+
+
 def test_get_activities_returns_all_activity_data(client):
     # Arrange
 
@@ -26,7 +29,7 @@ def test_signup_for_activity_adds_participant(client):
     # Assert
     assert response.status_code == 200
     assert response.json() == {"message": f"Signed up {email} for {activity_name}"}
-    assert email in client.app.state.activities[activity_name]["participants"]
+    assert email in activities[activity_name]["participants"]
 
 
 def test_signup_for_activity_rejects_duplicate_participant(client):
@@ -53,7 +56,7 @@ def test_unregister_from_activity_removes_participant(client):
     # Assert
     assert response.status_code == 200
     assert response.json() == {"message": f"Removed {email} from {activity_name}"}
-    assert email not in client.app.state.activities[activity_name]["participants"]
+    assert email not in activities[activity_name]["participants"]
 
 
 def test_unregister_from_activity_rejects_missing_participant(client):
